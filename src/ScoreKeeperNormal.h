@@ -63,6 +63,9 @@ class ScoreKeeperNormal : public ScoreKeeper {
   int m_iRoundTo;
   int m_ComboBonusFactor[NUM_TapNoteScore];
 
+ protected:
+  bool GetIsBeginner() const { return m_bIsBeginner; }
+
  public:
   ScoreKeeperNormal(
       PlayerState* pPlayerState, PlayerStageStats* pPlayerStageStats);

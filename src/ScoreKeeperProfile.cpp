@@ -27,7 +27,7 @@ int ScoreKeeperProfile::TapNoteScoreToDancePoints(TapNoteScore tns) const {
   auto it = m_profile.tapWeights.find(tns);
   if (it != m_profile.tapWeights.end()) {
     int iWeight = it->second;
-    if (m_bIsBeginner && PREFSMAN->m_bMercifulBeginner) {
+    if (GetIsBeginner() && PREFSMAN->m_bMercifulBeginner) {
       iWeight = std::max(0, iWeight);
     }
     return iWeight;
@@ -40,7 +40,7 @@ int ScoreKeeperProfile::HoldNoteScoreToDancePoints(HoldNoteScore hns) const {
   auto it = m_profile.holdWeights.find(hns);
   if (it != m_profile.holdWeights.end()) {
     int iWeight = it->second;
-    if (m_bIsBeginner && PREFSMAN->m_bMercifulBeginner) {
+    if (GetIsBeginner() && PREFSMAN->m_bMercifulBeginner) {
       iWeight = std::max(0, iWeight);
     }
     return iWeight;

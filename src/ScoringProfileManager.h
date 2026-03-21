@@ -6,6 +6,8 @@
 
 #include "ScoringProfile.h"
 
+struct lua_State;
+
 /** @brief Loads and manages scoring/timing profiles from ScoringProfiles/. */
 class ScoringProfileManager {
  public:
@@ -29,6 +31,8 @@ class ScoringProfileManager {
 
   /** Set the active profile by internal name. No-op if name not found. */
   void SetActiveProfile(const std::string& sName);
+
+  void PushSelf(lua_State* L);
 
  private:
   std::vector<ScoringProfile> m_profiles;
