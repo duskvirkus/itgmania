@@ -4,6 +4,7 @@
 #include <climits>
 #include <cmath>
 #include <cstddef>
+#include <map>
 #include <set>
 #include <string>
 #include <vector>
@@ -189,6 +190,9 @@ static Preference<float> m_fTimingWindowScale("TimingWindowScale", 1.0f);
 static Preference<float> m_fTimingWindowAdd("TimingWindowAdd", 0);
 static Preference1D<float> m_fTimingWindowSeconds(
     TimingWindowSecondsInit, NUM_TimingWindow);
+
+// Per-song timing window overrides set by the active scoring profile.
+static std::map<TimingWindow, float> g_TimingWindowOverrides;
 static Preference<float> m_fTimingWindowJump("TimingWindowJump", 0.25);
 static Preference<float> m_fMaxInputLatencySeconds(
     "MaxInputLatencySeconds", 0.0);
@@ -291,10 +295,21 @@ ThemeMetric<float> M_MOD_HIGH_CAP("Player", "MModHighCap");
 ThemeMetric<bool> BATTLE_RAVE_MIRROR("Player", "BattleRaveMirror");
 
 float Player::GetWindowSeconds(TimingWindow tw) {
-  float fSecs = m_fTimingWindowSeconds[tw];
+  auto it = g_TimingWindowOverrides.find(tw);
+  float fSecs =
+      (it != g_TimingWindowOverrides.end()) ? it->second : m_fTimingWindowSeconds[tw];
   fSecs *= m_fTimingWindowScale;
   fSecs += m_fTimingWindowAdd;
   return fSecs;
+}
+
+void Player::SetTimingWindowOverrides(
+    const std::map<TimingWindow, float>& overrides) {
+  g_TimingWindowOverrides = overrides;
+}
+
+void Player::ClearTimingWindowOverrides() {
+  g_TimingWindowOverrides.clear();
 }
 
 Player::Player(NoteData& nd, bool bVisibleParts) : m_NoteData(nd) {

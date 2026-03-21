@@ -1,6 +1,7 @@
 #ifndef PLAYER_H
 #define PLAYER_H
 
+#include <map>
 #include <string>
 #include <vector>
 
@@ -114,6 +115,12 @@ class Player : public ActorFrame {
 
   static float GetMaxStepDistanceSeconds();
   static float GetWindowSeconds(TimingWindow tw);
+
+  /** Override timing windows from a scoring profile for the current song.
+   *  Pass an empty map to clear all overrides. */
+  static void SetTimingWindowOverrides(
+      const std::map<TimingWindow, float>& overrides);
+  static void ClearTimingWindowOverrides();
   const NoteData& GetNoteData() const { return m_NoteData; }
   bool HasVisibleParts() const { return m_pNoteField != nullptr; }
 

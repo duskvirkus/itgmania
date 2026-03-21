@@ -33,13 +33,20 @@ void ScoreKeeper::GetScoreOfLastTapInRow(
 }
 
 #include "ScoreKeeperNormal.h"
+#include "ScoreKeeperProfile.h"
 #include "ScoreKeeperRave.h"
 #include "ScoreKeeperShared.h"
+#include "ScoringProfileManager.h"
 
 ScoreKeeper* ScoreKeeper::MakeScoreKeeper(
     std::string sClassName, PlayerState* pPlayerState,
     PlayerStageStats* pPlayerStageStats) {
   if (sClassName == "ScoreKeeperNormal") {
+    // If a non-default scoring profile is active, use the profile-aware keeper.
+    if (SCORINGPROFILEMAN && !SCORINGPROFILEMAN->GetActiveProfile().IsDefault()) {
+      return new ScoreKeeperProfile(pPlayerState, pPlayerStageStats,
+                                    SCORINGPROFILEMAN->GetActiveProfile());
+    }
     return new ScoreKeeperNormal(pPlayerState, pPlayerStageStats);
   } else if (sClassName == "ScoreKeeperRave") {
     return new ScoreKeeperRave(pPlayerState, pPlayerStageStats);

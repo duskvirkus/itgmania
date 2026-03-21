@@ -79,6 +79,7 @@
 #include "SongCacheIndex.h"
 #include "SongManager.h"
 #include "SpecialFiles.h"
+#include "ScoringProfileManager.h"
 #include "StatsManager.h"
 #include "ThemeManager.h"
 #include "UnlockManager.h"
@@ -274,6 +275,7 @@ void ShutdownGame() {
 
   RageUtil::SafeDelete(NETWORK);
   RageUtil::SafeDelete(SCREENMAN);
+  RageUtil::SafeDelete(SCORINGPROFILEMAN);
   RageUtil::SafeDelete(STATSMAN);
   RageUtil::SafeDelete(MESSAGEMAN);
   /* Delete INPUTMAN before the other INPUTFILTER handlers, or an input
@@ -945,6 +947,8 @@ int sm_main(int argc, char* argv[]) {
   SONGMAN->UpdatePreferredSort();
   NETWORK = new NetworkManager;
   STATSMAN = new StatsManager;
+  SCORINGPROFILEMAN = new ScoringProfileManager;
+  SCORINGPROFILEMAN->Init();
 
   // Initialize which courses are ranking courses here.
   SONGMAN->UpdateRankingCourses();

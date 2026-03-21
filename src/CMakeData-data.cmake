@@ -140,14 +140,20 @@ source_group("Data Structures\\\\Notes Writers"
 list(APPEND SM_DATA_SCORE_SRC
             "ScoreKeeper.cpp"
             "ScoreKeeperNormal.cpp"
+            "ScoreKeeperProfile.cpp"
             "ScoreKeeperRave.cpp"
-            "ScoreKeeperShared.cpp")
+            "ScoreKeeperShared.cpp"
+            "ScoringProfile.cpp"
+            "ScoringProfileManager.cpp")
 
 list(APPEND SM_DATA_SCORE_HPP
             "ScoreKeeper.h"
             "ScoreKeeperNormal.h"
+            "ScoreKeeperProfile.h"
             "ScoreKeeperRave.h"
-            "ScoreKeeperShared.h")
+            "ScoreKeeperShared.h"
+            "ScoringProfile.h"
+            "ScoringProfileManager.h")
 
 source_group("Data Structures\\\\Score Keepers"
              FILES

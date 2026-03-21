@@ -97,10 +97,10 @@ class ScoreKeeperNormal : public ScoreKeeper {
       NoteData* ndPre, NoteData* ndPost, const TimingData* td,
       float fSongSeconds);
 
-  int TapNoteScoreToDancePoints(TapNoteScore tns) const;
-  int HoldNoteScoreToDancePoints(HoldNoteScore hns) const;
-  int TapNoteScoreToGradePoints(TapNoteScore tns) const;
-  int HoldNoteScoreToGradePoints(HoldNoteScore hns) const;
+  virtual int TapNoteScoreToDancePoints(TapNoteScore tns) const;
+  virtual int HoldNoteScoreToDancePoints(HoldNoteScore hns) const;
+  virtual int TapNoteScoreToGradePoints(TapNoteScore tns) const;
+  virtual int HoldNoteScoreToGradePoints(HoldNoteScore hns) const;
   static int TapNoteScoreToDancePoints(TapNoteScore tns, bool bBeginner);
   static int HoldNoteScoreToDancePoints(HoldNoteScore hns, bool bBeginner);
   static int TapNoteScoreToGradePoints(TapNoteScore tns, bool bBeginner);

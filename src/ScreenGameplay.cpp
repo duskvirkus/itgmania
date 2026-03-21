@@ -71,6 +71,7 @@
 #include "ScoreDisplayRave.h"
 #include "ScoreKeeperNormal.h"
 #include "ScoreKeeperRave.h"
+#include "ScoringProfileManager.h"
 #include "ScreenDimensions.h"
 #include "ScreenManager.h"
 #include "ScreenMessage.h"
@@ -223,6 +224,12 @@ void PlayerInfo::Load(
 
   m_pPrimaryScoreKeeper = ScoreKeeper::MakeScoreKeeper(
       SCORE_KEEPER_CLASS, pPlayerState, pPlayerStageStats);
+
+  // Apply timing window overrides from the active scoring profile.
+  if (SCORINGPROFILEMAN) {
+    Player::SetTimingWindowOverrides(
+        SCORINGPROFILEMAN->GetActiveProfile().timingWindowOverrides);
+  }
 
   switch (GAMESTATE->m_PlayMode) {
     case PLAY_MODE_RAVE:
@@ -1033,6 +1040,9 @@ ScreenGameplay::~ScreenGameplay() {
   }
 
   m_GameplayAssist.StopPlaying();
+
+  // Clear any timing window overrides that were applied for this song.
+  Player::ClearTimingWindowOverrides();
 }
 
 bool ScreenGameplay::IsLastSong() {
