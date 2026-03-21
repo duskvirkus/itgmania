@@ -114,6 +114,9 @@ class ScoreKeeperNormal : public ScoreKeeper {
       const NoteData& nd, int iRow, int& iNumHitContinueCombo,
       int& iNumHitMaintainCombo, int& iNumBreakCombo);
 
+  virtual void HandleRowComboInternal(
+      TapNoteScore tns, int iNumTapsInRow, int iRow = -1);
+
  private:
   /**
    * @brief Take care of some internal work with our scoring systems.
@@ -125,8 +128,6 @@ class ScoreKeeperNormal : public ScoreKeeper {
   void HandleComboInternal(
       int iNumHitContinueCombo, int iNumHitMaintainCombo, int iNumBreakCombo,
       int iRow = -1);
-  void HandleRowComboInternal(
-      TapNoteScore tns, int iNumTapsInRow, int iRow = -1);
 };
 
 #endif

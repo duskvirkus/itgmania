@@ -19,6 +19,8 @@ class ScoreKeeperProfile : public ScoreKeeperNormal {
   void GetRowCounts(const NoteData& nd, int iRow, int& iNumHitContinueCombo,
                     int& iNumHitMaintainCombo,
                     int& iNumBreakCombo) override;
+  void HandleRowComboInternal(TapNoteScore tns, int iNumTapsInRow,
+                               int iRow = -1) override;
 
   // Override the static-style instance methods to use profile weights.
   int TapNoteScoreToDancePoints(TapNoteScore tns) const override;

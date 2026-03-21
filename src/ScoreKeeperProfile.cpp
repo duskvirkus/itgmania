@@ -4,12 +4,16 @@
 #include "NoteData.h"
 #include "PrefsManager.h"
 #include "PlayerStageStats.h"
+#include "RageLog.h"
 #include "global.h"
 
 ScoreKeeperProfile::ScoreKeeperProfile(PlayerState* pPlayerState,
                                        PlayerStageStats* pPlayerStageStats,
                                        const ScoringProfile& profile)
-    : ScoreKeeperNormal(pPlayerState, pPlayerStageStats), m_profile(profile) {}
+    : ScoreKeeperNormal(pPlayerState, pPlayerStageStats), m_profile(profile) {
+  LOG->Trace("ScoreKeeperProfile: using profile '%s', bGoodsBreakCombo=%d",
+             profile.sName.c_str(), (int)profile.bGoodsBreakCombo);
+}
 
 void ScoreKeeperProfile::Load(const std::vector<Song*>& apSongs,
                                const std::vector<Steps*>& apSteps,
@@ -19,6 +23,16 @@ void ScoreKeeperProfile::Load(const std::vector<Song*>& apSongs,
   if (!m_profile.IsDefault()) {
     m_pPlayerStageStats->m_bDisqualified = true;
   }
+}
+
+void ScoreKeeperProfile::HandleRowComboInternal(TapNoteScore tns,
+                                                int iNumTapsInRow, int iRow) {
+  // When GoodsBreakCombo is set, treat W4 (Good) as worse than the maintain
+  // threshold so it breaks combo rather than maintaining it.
+  if (m_profile.bGoodsBreakCombo && tns == TNS_W4) {
+    tns = TNS_W5;
+  }
+  ScoreKeeperNormal::HandleRowComboInternal(tns, iNumTapsInRow, iRow);
 }
 
 void ScoreKeeperProfile::GetRowCounts(const NoteData& nd, int iRow,
