@@ -109,6 +109,11 @@ class ScoreKeeperNormal : public ScoreKeeper {
   static int TapNoteScoreToGradePoints(TapNoteScore tns, bool bBeginner);
   static int HoldNoteScoreToGradePoints(HoldNoteScore hns, bool bBeginner);
 
+ protected:
+  virtual void GetRowCounts(
+      const NoteData& nd, int iRow, int& iNumHitContinueCombo,
+      int& iNumHitMaintainCombo, int& iNumBreakCombo);
+
  private:
   /**
    * @brief Take care of some internal work with our scoring systems.
@@ -122,9 +127,6 @@ class ScoreKeeperNormal : public ScoreKeeper {
       int iRow = -1);
   void HandleRowComboInternal(
       TapNoteScore tns, int iNumTapsInRow, int iRow = -1);
-  void GetRowCounts(
-      const NoteData& nd, int iRow, int& iNumHitContinueCombo,
-      int& iNumHitMaintainCombo, int& iNumBreakCombo);
 };
 
 #endif

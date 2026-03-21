@@ -16,6 +16,10 @@ class ScoreKeeperProfile : public ScoreKeeperNormal {
             const std::vector<Steps*>& apSteps,
             const std::vector<AttackArray>& asModifiers) override;
 
+  void GetRowCounts(const NoteData& nd, int iRow, int& iNumHitContinueCombo,
+                    int& iNumHitMaintainCombo,
+                    int& iNumBreakCombo) override;
+
   // Override the static-style instance methods to use profile weights.
   int TapNoteScoreToDancePoints(TapNoteScore tns) const override;
   int HoldNoteScoreToDancePoints(HoldNoteScore hns) const override;

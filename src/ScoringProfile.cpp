@@ -22,6 +22,7 @@ bool ScoringProfile::LoadFromFile(const std::string& sPath) {
     return false;
   }
   ini.GetValue("Meta", "Description", sDescription);
+  ini.GetValue("Meta", "GoodsBreakCombo", bGoodsBreakCombo);
 
   // [ScoringWeights] — all keys are required
   struct TapEntry {

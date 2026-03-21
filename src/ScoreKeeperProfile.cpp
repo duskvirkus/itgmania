@@ -1,6 +1,7 @@
 #include "ScoreKeeperProfile.h"
 
 #include "GameState.h"
+#include "NoteData.h"
 #include "PrefsManager.h"
 #include "PlayerStageStats.h"
 #include "global.h"
@@ -17,6 +18,34 @@ void ScoreKeeperProfile::Load(const std::vector<Song*>& apSongs,
   // Non-default profiles disqualify the score from ranking/GrooveStats.
   if (!m_profile.IsDefault()) {
     m_pPlayerStageStats->m_bDisqualified = true;
+  }
+}
+
+void ScoreKeeperProfile::GetRowCounts(const NoteData& nd, int iRow,
+                                       int& iNumHitContinueCombo,
+                                       int& iNumHitMaintainCombo,
+                                       int& iNumBreakCombo) {
+  if (!m_profile.bGoodsBreakCombo) {
+    ScoreKeeperNormal::GetRowCounts(nd, iRow, iNumHitContinueCombo,
+                                    iNumHitMaintainCombo, iNumBreakCombo);
+    return;
+  }
+
+  // With GoodsBreakCombo, treat W4 (Good) as a combo-break rather than
+  // a combo-maintain. W1/W2/W3 continue combo; W4 and below break it.
+  iNumHitContinueCombo = iNumHitMaintainCombo = iNumBreakCombo = 0;
+  for (int track = 0; track < nd.GetNumTracks(); ++track) {
+    const TapNote& tn = nd.GetTapNote(track, iRow);
+    if (tn.type != TapNoteType_Tap && tn.type != TapNoteType_HoldHead &&
+        tn.type != TapNoteType_Lift) {
+      continue;
+    }
+    TapNoteScore tns = tn.result.tns;
+    if (tns >= TNS_W3) {
+      ++iNumHitContinueCombo;
+    } else {
+      ++iNumBreakCombo;
+    }
   }
 }
 

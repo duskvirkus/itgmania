@@ -22,6 +22,9 @@ struct ScoringProfile {
    *  this map will override the global preferences. */
   std::map<TimingWindow, float> timingWindowOverrides;
 
+  /** If true, W4 (Good) judgments break combo instead of maintaining it. */
+  bool bGoodsBreakCombo = false;
+
   /** Returns true if this profile is the tournament-legal default. */
   bool IsDefault() const { return sName == "default"; }
 
