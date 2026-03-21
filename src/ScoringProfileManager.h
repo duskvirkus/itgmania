@@ -12,7 +12,7 @@ struct lua_State;
 class ScoringProfileManager {
  public:
   ScoringProfileManager();
-  ~ScoringProfileManager() {}
+  ~ScoringProfileManager();
 
   /** Scan ScoringProfiles/ and load all valid .ini files. */
   void Init();

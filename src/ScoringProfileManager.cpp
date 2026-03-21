@@ -16,7 +16,18 @@ ScoringProfileManager* SCORINGPROFILEMAN = nullptr;
 static const std::string PROFILES_DIR = "ScoringProfiles/";
 
 ScoringProfileManager::ScoringProfileManager()
-    : m_sActiveProfileName("default") {}
+    : m_sActiveProfileName("default") {
+  // Register with Lua.
+  Lua* L = LUA->Get();
+  lua_pushstring(L, "SCORINGPROFILEMAN");
+  this->PushSelf(L);
+  lua_settable(L, LUA_GLOBALSINDEX);
+  LUA->Release(L);
+}
+
+ScoringProfileManager::~ScoringProfileManager() {
+  LUA->UnsetGlobal("SCORINGPROFILEMAN");
+}
 
 void ScoringProfileManager::Init() {
   m_profiles.clear();
