@@ -1,7 +1,6 @@
 [submodule "Themes/Simply-Love"]
 	path = Themes/Simply Love
-	url = https://github.com/Simply-Love/Simply-Love-SM5.git
-	shallow = true
+	url = git@github.com:duskvirkus/Simply-Love-SM5.git
 [submodule "extern/ixwebsocket"]
 	path = extern/IXWebSocket
 	url = https://github.com/machinezone/IXWebSocket.git
